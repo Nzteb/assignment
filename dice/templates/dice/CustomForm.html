@@ -7,12 +7,14 @@
 
 {% block content %}
 
-{% formfield player.dice1 %}
-{% formfield player.dice2 %}
-{% formfield player.dice3 %}
-{% formfield player.dice4 %}
-{% formfield player.dice5 %}
-{% formfield player.dice6 %}
+Please enter the results of the dice rolling. <br>
+
+<input style="height: 50px; width: 50px; font-size: 40pt;" name="dice1" type="text" pattern="[1-6]">
+<input style="height: 50px; width: 50px; font-size: 40pt;" name="dice2" type="text" pattern="[1-6]">
+<input style="height: 50px; width: 50px; font-size: 40pt;" name="dice3" type="text" pattern="[1-6]">
+<input style="height: 50px; width: 50px; font-size: 40pt;" name="dice4" type="text" pattern="[1-6]">
+<input style="height: 50px; width: 50px; font-size: 40pt;" name="dice5" type="text" pattern="[1-6]">
+<input style="height: 50px; width: 50px; font-size: 40pt;" name="dice6" type="text" pattern="[1-6]">
 
 
     {% next_button %}

@@ -29,10 +29,16 @@ class ResultsWaitPage(WaitPage):
 
 
 class PrivateResults(Page):
+    def vars_for_template(self):
+        sum = self.player.return_sum()
+        return {'sum':sum}
     def is_displayed(self):
         return self.player.treatment == 'private'
 
 class DistributionResults(Page):
+    def vars_for_template(self):
+        sum = self.player.return_sum()
+        return {'sum':sum}
     def is_displayed(self):
         return self.player.treatment == 'distribution'
 

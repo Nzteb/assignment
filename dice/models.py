@@ -53,7 +53,7 @@ class Player(BasePlayer):
     #TODO: Ok, for sure we want every single dice input saved in the datebase.
     #TODO: But can't implement this nicer? E.g. create the variables on the fly instead of in advance?
 
-
+    #TODO: you dont neeed min max here, because the custom form is not entering these parameters. Instead it is done in the html itself
     dice1 = models.IntegerField(doc='The input for the x\'th dice roll of the player',
                                 min=1, max=6)
     dice2 = models.IntegerField(doc='The input for the x\'th dice roll of the player',
@@ -69,15 +69,12 @@ class Player(BasePlayer):
 
     age = models.IntegerField(doc='The participants\' age')
     gender = models.CharField(doc='The participants\'s gender', choices=['male', 'female'])
-
-
     student = models.BooleanField(doc = '1 if the participant is not a student', verbose_name='I am a student.')
     studies = models.CharField(doc = 'Field of study, if the participant is a student')
-
-
-#widget=widgets.CheckboxInput()
-
 
     def calc_payoff(self):
         self.payoff = sum([self.dice1, self.dice2, self.dice3, self.dice4, self.dice5, self.dice6]) / 2
 
+
+    def return_sum(self):
+        return sum ([self.dice1, self.dice2, self.dice3, self.dice4, self.dice5, self.dice6])
