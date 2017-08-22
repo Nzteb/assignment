@@ -1,0 +1,18 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Page title
+{% endblock %}
+
+{% block content %}
+
+You entered, that you are a student. Please state your field of studies <br>
+{%formfield player.studies%}<br>
+
+After that, please remain seated until a Lab official calls your ID/Name.
+
+    {% next_button %}
+{% endblock %}
+
+
