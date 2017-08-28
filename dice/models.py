@@ -19,7 +19,6 @@ class Constants(BaseConstants):
 
 class Subsession(BaseSubsession):
 
-    #
     def assign_treatment_random(self):
         treatment = random.choice(['private', 'distribution'])
         for player in self.get_players():
@@ -36,6 +35,22 @@ class Subsession(BaseSubsession):
                 self.assign_treatment_random()
         else: #no treatment was entered in settings.py
             self.assign_treatment_random()
+
+    histogram_data = 1
+
+    def calculate_histogram_data(self):
+        data = {6:0, 7:0, 8:0, 9:0, 10:0, 11:0, 12:0, 13:0, 14:0, 15:0, 16:0, 17:0, 18:0, 19:0, 20:0, 21:0, 22:0, 23:0, 24:0, 25:0, 26:0, 27:0, 28:0, 29:0, 30:0, 31:0, 32:0, 33:0, 34:0, 35:0, 36:0}
+        for player in self.get_players():
+            sum = player.return_sum()
+            data[sum] += 1
+        #TODO: So he arrives here, but anyhow the self.histrogram_data assignment goes into nowhere
+        print('At least I was here')
+        # TODO: Im not sure if this last declaration of histogram_data always has the same ordering. But the ordering of the frequency is crucial for the histogramm
+        # TODO: check this and find a better solution
+        self.histogram_data = list(data.keys())
+
+
+
 
 
 

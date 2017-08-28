@@ -115,7 +115,7 @@ SESSION_CONFIGS = [
     {
         'name': 'dice',
         'display_name': 'Dice distribution',
-        'num_demo_participants': 1,
+        'num_demo_participants': 2,
         'app_sequence': ['dice'],
         #'treatment': 'private' #'treatment': 'distribution'
     }

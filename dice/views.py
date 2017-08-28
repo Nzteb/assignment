@@ -25,7 +25,8 @@ class CustomForm(Page):
 #TODO: but a waitpage is needed to calculate the histogramm
 class ResultsWaitPage(WaitPage):
     def after_all_players_arrive(self):
-        pass
+        #TODO calculation of histogram data is done in both treatments for now (only displayed in distribution treatment)
+        self.subsession.calculate_histogram_data()
 
 
 class PrivateResults(Page):
@@ -38,21 +39,16 @@ class PrivateResults(Page):
 class DistributionResults(Page):
     def vars_for_template(self):
         sum = self.player.return_sum()
-        return {'sum':sum}
+        return {'sum':sum, 'histogramm_data': [{ 'name':'Distribution of Inputs of other Players', 'data': self.subsession.histogram_data}]}
     def is_displayed(self):
         return self.player.treatment == 'distribution'
+
 
 
 class Demographics(Page):
     form_model = models.Player
     form_fields = ['student']
 
-    #TODO: This has no effect because after the participant marks the nonstudent checkbox the code is not reloaded:
-    #TODO: possible workarounds:1.) let the field of studies field only appear if the checkbox is marked, with javascript
-    #TODO: 2.) have the checkbox on the page before field of studies and then use the below function
-    def studies_choices(self):
-        if self.player.nonstudent == 1:
-            return 'Non Student'
 
 class FieldOfStudies(Page):
     form_model = models.Player
