@@ -15,10 +15,6 @@ Here, see the histogram of the payoff results:
 <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
 
-
-this is it {{histogramm_data}}
-
-
     {% next_button %}
 {% endblock %}
 
@@ -35,10 +31,10 @@ Highcharts.chart('container', {
         type: 'column'
     },
     title: {
-        text: 'Monthly Average Rainfall'
+        text: 'Experiment Results'
     },
     subtitle: {
-        text: 'Source: WorldClimate.com'
+        text: 'Distribution of inputted sums'
     },
     xAxis: {
         categories: [
@@ -49,13 +45,13 @@ Highcharts.chart('container', {
     yAxis: {
         min: 0,
         title: {
-            text: 'Rainfall (mm)'
+            text: 'Relative Frequency of inputted sums'
         }
     },
     tooltip: {
         headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
         pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-            '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+            '<td style="padding:0"><b>{point.y:.1f} (relative frequency)</b></td></tr>',
         footerFormat: '</table>',
         shared: true,
         useHTML: true

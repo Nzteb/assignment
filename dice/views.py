@@ -18,28 +18,33 @@ class CustomForm(Page):
     form_model = models.Player
     form_fields = ['dice1', 'dice2', 'dice3', 'dice4', 'dice5', 'dice6']
     def before_next_page(self):
-        self.player.calc_payoff()
+        self.player.payoff = self.player.return_sum()/2
 
 
-#TODO: as participants do not interact with each other, wait pages are not needed in principle
-#TODO: but a waitpage is needed to calculate the histogramm
+#Wait page is needed, so that the histogramm will be calculated with data of all players
+#TODO: you could try something like "is displayed if treatment = distribution" does this work with wait pages
 class ResultsWaitPage(WaitPage):
-    def after_all_players_arrive(self):
-        #TODO calculation of histogram data is done in both treatments for now (only displayed in distribution treatment)
-        self.subsession.calculate_histogram_data()
+    pass
 
 
 class PrivateResults(Page):
     def vars_for_template(self):
-        sum = self.player.return_sum()
-        return {'sum':sum}
+        return {'sum':self.player.return_sum()}
     def is_displayed(self):
         return self.player.treatment == 'private'
 
 class DistributionResults(Page):
     def vars_for_template(self):
-        sum = self.player.return_sum()
-        return {'sum':sum, 'histogramm_data': [{ 'name':'Distribution of Inputs of other Players', 'data': self.subsession.histogram_data}]}
+        #calculate data for the histogramm
+        #data: 'inputted sum' : 'absolute frequency of players'
+        data = {6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0, 13: 0, 14: 0, 15: 0, 16: 0, 17: 0, 18: 0, 19: 0, 20: 0,
+                21: 0, 22: 0, 23: 0, 24: 0, 25: 0, 26: 0, 27: 0, 28: 0, 29: 0, 30: 0, 31: 0, 32: 0, 33: 0, 34: 0, 35: 0,
+                36: 0}
+        for player in self.subsession.get_players():
+            _sum = player.return_sum()
+            data[_sum] += 1
+        # TODO: Im not sure if list(data.keys()) always has the same ordering. But the ordering of the frequency is crucial for the histogramm
+        return {'sum':self.player.return_sum(), 'histogramm_data': [{'name':'Frequency','data':[value/self.session.config['num_demo_participants'] for value in  list(data.values())]}]}
     def is_displayed(self):
         return self.player.treatment == 'distribution'
 
