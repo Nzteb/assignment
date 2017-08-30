@@ -1,0 +1,18 @@
+{% extends "global/Page.html" %}
+{% load otree_tags %}
+
+{% block title %}
+    Instructions
+{% endblock %}
+
+
+{% block content %}
+        {% if player.treatment == 'private' %}
+            The type of this experiment is "private":<br>
+            No player will have any information about what the other players earn or input. To that end, no histogramm will be shown.
+        {% else %}
+            The type of this exeriment is "distribution":<br>
+            A Histogramm will be shown at the end of the game, where everyone can see, what the other players in the experiment inputted.
+        {% endif %}
+        {% next_button %}
+{% endblock %}

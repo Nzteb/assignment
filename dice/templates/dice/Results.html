@@ -1,0 +1,73 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Page title
+{% endblock %}
+
+{% block content %}
+
+    The overall sum of your dices is {{sum}}.<br>
+    Your payoff is {{player.payoff}}. <br>
+    {% if player.treatment == 'distribution' %}
+        Here, see the histogram of the payoff results:
+        <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+    {% endif %}
+
+
+    {% next_button %}
+{% endblock %}
+
+
+
+
+
+{% block scripts %}
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+    <script>
+
+        Highcharts.chart('container', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Experiment Results'
+            },
+            subtitle: {
+                text: 'Distribution of inputted sums'
+            },
+            xAxis: {
+                categories: [
+                        '6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31','32','33','34','35','36'
+                ],
+                crosshair: true
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Relative Frequency of inputted sums'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f} (relative frequency)</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: {{histogramm_data|json}}
+        });
+
+    </script>
+{% endblock %}

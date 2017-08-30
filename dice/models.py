@@ -4,7 +4,12 @@ from otree.api import (
 )
 
 import random
-author = 'Your name here'
+
+from django_countries.fields import CountryField
+
+
+
+author = 'Patrick Betz'
 
 doc = """
 Your app description
@@ -46,28 +51,29 @@ class Player(BasePlayer):
 
     treatment = models.CharField(doc='Defines the treatment of the player. The treatment is the same for all players in one session and can either be "Private" or "Distribution".',
                                  choices=['private', 'distribution'])
-    #TODO: Ok, for sure we want every single dice input saved in the datebase.
-    #TODO: But can't implement this nicer? E.g. create the variables on the fly instead of in advance?
 
-    #TODO: you dont neeed min max here, because the custom form is not entering these parameters. Instead it is done in the html itself
-    dice1 = models.IntegerField(doc='The input for the x\'th dice roll of the player',
-                                min=1, max=6)
-    dice2 = models.IntegerField(doc='The input for the x\'th dice roll of the player',
-                                min=1, max=6)
-    dice3 = models.IntegerField(doc='The input for the x\'th dice roll of the player',
-                                min=1, max=6)
-    dice4 = models.IntegerField(doc='The input for the x\'th dice roll of the player',
-                                min=1, max=6)
-    dice5 = models.IntegerField(doc='The input for the x\'th dice roll of the player',
-                                min=1, max=6)
-    dice6 = models.IntegerField(doc='The input for the x\'th dice roll of the player',
-                                min=1, max=6)
+    #All dice inputs shall appear in the database
+    dice1 = models.IntegerField(doc='The input for the x\'th dice roll of the player')
+    dice2 = models.IntegerField(doc='The input for the x\'th dice roll of the player')
+    dice3 = models.IntegerField(doc='The input for the x\'th dice roll of the player')
+    dice4 = models.IntegerField(doc='The input for the x\'th dice roll of the player')
+    dice5 = models.IntegerField(doc='The input for the x\'th dice roll of the player')
+    dice6 = models.IntegerField(doc='The input for the x\'th dice roll of the player')
 
-    age = models.IntegerField(doc='The participants\' age')
+    age = models.IntegerField(doc='The participants\' age', min=14, max=110)
     gender = models.CharField(doc='The participants\'s gender', choices=['male', 'female'])
-    student = models.BooleanField(doc = '1 if the participant is not a student', verbose_name='I am a student.')
-    studies = models.CharField(doc = 'Field of study, if the participant is a student')
-
-    #Note: payoff is calculated by using this function
+    student = models.BooleanField(doc='1 if the participant is a student')
+    studies = models.CharField(doc='Field of study, if the participant is a student')
+    risk = models.CharField(doc='Risk attitude of the participant. (7 points Likert scale)',
+                            choices=['Agree Very Strongly',
+                                     'Agree Strongly',
+                                     'Agree',
+                                     'Disagree',
+                                     'Disagree Strongly',
+                                     'Disagree Very Strongly'],
+                            widget=widgets.RadioSelectHorizontal(),
+                            verbose_name='"I like taking risks."')
+    country = CountryField(blank='Select your country of origin.')
+    #Note: payoff is calculated in views by using this function
     def return_sum(self):
         return sum ([self.dice1, self.dice2, self.dice3, self.dice4, self.dice5, self.dice6])

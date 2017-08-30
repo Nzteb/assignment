@@ -56,8 +56,8 @@ AWS_SECRET_ACCESS_KEY = environ.get('AWS_SECRET_ACCESS_KEY')
 
 
 # e.g. EUR, CAD, GBP, CHF, CNY, JPY
-REAL_WORLD_CURRENCY_CODE = 'USD'
-USE_POINTS = True
+REAL_WORLD_CURRENCY_CODE = 'EUR'
+USE_POINTS = False
 
 
 # e.g. en, de, fr, it, ja, zh-hans
@@ -65,7 +65,7 @@ USE_POINTS = True
 LANGUAGE_CODE = 'en'
 
 # if an app is included in SESSION_CONFIGS, you don't need to list it here
-INSTALLED_APPS = ['otree']
+INSTALLED_APPS = ['otree','django_countries']
 
 # SENTRY_DSN = ''
 
@@ -115,7 +115,7 @@ SESSION_CONFIGS = [
     {
         'name': 'dice',
         'display_name': 'Dice distribution',
-        'num_demo_participants': 10,
+        'num_demo_participants': 2,
         'app_sequence': ['dice'],
         #'treatment': 'private' #'treatment': 'distribution'
     }

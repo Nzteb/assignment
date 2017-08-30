@@ -7,8 +7,21 @@
 
 {% block content %}
 
-Please enter if you are a student or nonstudent<br>
-{% formfield player.student %}
+    Please enter your country of origin<br>
+    {% formfield player.country %}
+
+    Please enter your gender<br>
+    {% formfield player.gender %}<br>
+
+    Please enter your age<br>
+    {% formfield player.age %}<br>
+
+    Please enter your risk preferences<br>
+    {% formfield player.risk %}
+
+    Please enter if you are a student or nonstudent<br>
+    {% formfield player.student %}
+
 
 
     {% next_button %}
