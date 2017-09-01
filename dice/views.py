@@ -11,6 +11,8 @@ class Instructions(Page):
 class CustomForm(Page):
     form_model = models.Player
     form_fields = ['dice1', 'dice2', 'dice3', 'dice4', 'dice5', 'dice6']
+    timeout_seconds = 300
+    timeout_submission = {'dice1':1, 'dice2':1, 'dice3':1, 'dice4':1, 'dice5':1, 'dice6':1}
     def before_next_page(self):
         self.player.payoff = self.player.return_sum()/2
 
@@ -23,14 +25,11 @@ class ResultsWaitPage(WaitPage):
 
 class Results(Page):
     def vars_for_template(self):
-        # calculate data for the histogramm; data: 'inputted sum' : 'absolute frequency of players'
-        # note: this could be done in both treatments but only be displayed in the distriution treatment
-        # but then the waitpage must be used also in private treatment otherwise an error occurs when the (useless) calculation starts
-        # before all players are finished with inputting their results
         #TODO: Substantial objection: the histogramm data is calculated by each player when he is on this page
         #TODO: it would be nicer if this is only done once. But if I write a function in models.Subsession and call this from here,
         #TODO than exactly the same thing happens because every player is calling this function then from here, right?
         data = {}
+        #calculate histogramm date in distribution treatment
         if self.player.treatment == 'distribution':
             data = {6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0, 13: 0, 14: 0, 15:0, 16: 0,
                     17: 0, 18: 0, 19: 0, 20: 0, 21: 0, 22: 0, 23: 0, 24: 0, 25: 0, 26: 0,
@@ -39,7 +38,7 @@ class Results(Page):
                 sum = player.return_sum()
                 data[sum] += 1
         #data holds absolute frequencies, in the dict value this is divided by the number of players
-        #note: in private treatment the 'data dic' is empty and will not be used in the template
+        #note: in private treatment we need the empty data = {} otherwise the function throws an exception
         return {'sum':self.player.return_sum(), 'histogramm_data': [{'name':'Frequency','data':[value/self.session.config['num_demo_participants'] for value in list(data.values())]}]}
 
 
@@ -48,10 +47,15 @@ class Demographics(Page):
     form_fields = ['nonstudent', 'gender', 'age', 'risk', 'country','studies']
 
 
+class LastPage(Page):
+    pass
+
+
 page_sequence = [
     Instructions,
     CustomForm,
     ResultsWaitPage,
     Results,
     Demographics,
+    LastPage
 ]

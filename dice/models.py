@@ -31,12 +31,12 @@ class Subsession(BaseSubsession):
             player.treatment = treatment
 
     def creating_session(self):
-        #TODO: not tested yet
         if 'treatment' in self.session.config:
             #Check if a valid treatment was entered in settings.py otherwise assign treatment randomly
-            if self.session.config['treatment'] == ('private' or 'distribution'):
+            treatment_input = self.session.config['treatment']
+            if treatment_input  == 'private' or treatment_input == 'distribution':
                 for player in self.get_players():
-                    player.treatment = self.session.config['treatment']
+                    player.treatment = treatment_input
             else: #nonvalid treatment was entered in settings.py
                 self.assign_treatment_random()
         else: #no treatment was entered in settings.py
@@ -53,17 +53,23 @@ class Player(BasePlayer):
                                  choices=['private', 'distribution'])
 
     #All dice inputs shall appear in the database
-    dice1 = models.IntegerField(doc='The input for the x\'th dice roll of the player')
-    dice2 = models.IntegerField(doc='The input for the x\'th dice roll of the player')
-    dice3 = models.IntegerField(doc='The input for the x\'th dice roll of the player')
-    dice4 = models.IntegerField(doc='The input for the x\'th dice roll of the player')
-    dice5 = models.IntegerField(doc='The input for the x\'th dice roll of the player')
-    dice6 = models.IntegerField(doc='The input for the x\'th dice roll of the player')
+    dice1 = models.IntegerField(doc='The input for the 1st dice roll of the player', min=1, max=6)
+    dice2 = models.IntegerField(doc='The input for the 2nd dice roll of the player', min=1, max=6)
+    dice3 = models.IntegerField(doc='The input for the 3rd dice roll of the player', min=1, max=6)
+    dice4 = models.IntegerField(doc='The input for the fourth dice roll of the player', min=1, max=6)
+    dice5 = models.IntegerField(doc='The input for the fift dice roll of the player', min=1, max=6)
+    dice6 = models.IntegerField(doc='The input for the sixt dice roll of the player', min=1, max=6)
 
-    age = models.IntegerField(doc='The participants\' age', min=14, max=110)
-    gender = models.CharField(doc='The participants\'s gender', choices=['male', 'female'])
-    nonstudent = models.BooleanField(doc='1 if the participant is not a student', widget=widgets.CheckboxInput(), verbose_name='I am not a student')
-    studies = models.CharField(doc='Field of study, if the participant is a student', blank='True')
+    age = models.IntegerField(doc='The age of the participant',
+                              min=14,
+                              max=110)
+    gender = models.CharField(doc='The gender of the participant',
+                              choices=['male', 'female'])
+    nonstudent = models.BooleanField(doc='1 if the participant is not a student',
+                                     widget=widgets.CheckboxInput(),
+                                     verbose_name='I am not a student')
+    studies = models.CharField(doc='Field of study, if the participant is a student',
+                               blank='True')
     risk = models.CharField(doc='Risk attitude of the participant. (7 points Likert scale)',
                             choices=['Agree Very Strongly',
                                      'Agree Strongly',

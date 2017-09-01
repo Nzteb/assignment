@@ -110,14 +110,21 @@ SESSION_CONFIG_DEFAULTS = {
     'mturk_hit_settings': mturk_hit_settings,
 }
 
-
+#note: if treatment is left out, the treatment will be randomized in the app
 SESSION_CONFIGS = [
     {
-        'name': 'dice',
-        'display_name': 'Dice distribution',
+        'name': 'dicedistribution',
+        'display_name': 'Dice treatment_distribution',
         'num_demo_participants': 2,
         'app_sequence': ['dice'],
-        #'treatment': 'private' #'treatment': 'distribution'
+        'treatment': 'distribution'
+    },
+    {
+        'name': 'diceprivate',
+        'display_name': 'Dice treatment_private',
+        'num_demo_participants': 2,
+        'app_sequence': ['dice'],
+        'treatment': 'private'
     }
 ]
 
