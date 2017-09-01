@@ -45,21 +45,7 @@ class Results(Page):
 
 class Demographics(Page):
     form_model = models.Player
-    form_fields = ['student', 'gender', 'age', 'risk', 'country']
-
-
-#Builds the last page for students, with instructions to remain seated
-class FieldOfStudies(Page):
-    form_model = models.Player
-    form_fields = ['studies']
-    def is_displayed(self):
-        return  self.player.student
-
-
-class LastPageNonstudent(Page):
-    def is_displayed(self):
-        return not self.player.student
-    pass
+    form_fields = ['nonstudent', 'gender', 'age', 'risk', 'country','studies']
 
 
 page_sequence = [
@@ -68,6 +54,4 @@ page_sequence = [
     ResultsWaitPage,
     Results,
     Demographics,
-    FieldOfStudies,
-    LastPageNonstudent
 ]

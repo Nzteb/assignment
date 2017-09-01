@@ -62,8 +62,8 @@ class Player(BasePlayer):
 
     age = models.IntegerField(doc='The participants\' age', min=14, max=110)
     gender = models.CharField(doc='The participants\'s gender', choices=['male', 'female'])
-    student = models.BooleanField(doc='1 if the participant is a student')
-    studies = models.CharField(doc='Field of study, if the participant is a student')
+    nonstudent = models.BooleanField(doc='1 if the participant is not a student', widget=widgets.CheckboxInput(), verbose_name='I am not a student')
+    studies = models.CharField(doc='Field of study, if the participant is a student', blank='True')
     risk = models.CharField(doc='Risk attitude of the participant. (7 points Likert scale)',
                             choices=['Agree Very Strongly',
                                      'Agree Strongly',
