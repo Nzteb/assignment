@@ -25,14 +25,14 @@ class PlayerBot(Bot):
                 #Has to be displayed
                 assert ('The type of this experiment is "private"' in self.html)
                 #Must not be displayed
-                assert ('The type of this exeriment is "distribution"' not in self.html)
+                assert ('The type of this experiment is "distribution"' not in self.html)
                 yield views.Instructions
                 yield (views.CustomForm, {'dice1':2, 'dice2':2, 'dice3':2, 'dice4':2, 'dice5':2, 'dice6':2})
                 #must not be displayed
                 assert ('Below, you can see the distribution of the results of the other participants.' not  in self.html)
             elif treatment == 'distribution':
                 #Has to be displayed
-                assert ('The type of this exeriment is "distribution"' in self.html)
+                assert ('The type of this experiment is "distribution"' in self.html)
                 #Must not be displayed
                 assert ('The type of this experiment is "private"' not in self.html)
                 yield views.Instructions
@@ -63,9 +63,11 @@ class PlayerBot(Bot):
                 yield(views.Results)
                 #ensure that only correct age input is possible
                 for wrong_age in [10000, 'whats up', '!!']:
-                    yield SubmissionMustFail(views.Demographics,{'nonstudent':True, 'gender':'male', 'age':wrong_age, 'risk':'Agree', 'country':'DE','studies':''})
-                #ensure that only chars can be entered in field of studies
-                yield (views.Demographics, {'nonstudent': False, 'gender': 'male', 'age': 26, 'risk': 'Agree', 'country': 'DE', 'studies': 'Economics'})
+                    yield SubmissionMustFail(views.Demographics,{'nonstudent':True, 'gender':'Male', 'age':wrong_age, 'risk':'Agree', 'country':'DE','studies':''})
+                #ensure that country of origin cannot be blank
+                yield SubmissionMustFail(views.Demographics,{'nonstudent': True, 'gender': 'Female', 'age': 27, 'risk': 'Agree','country': '', 'studies': ''})
+                #finish the experiment correctly
+                yield (views.Demographics, {'nonstudent': False, 'gender': 'Female', 'age': 26, 'risk': 'Agree', 'country': 'DE', 'studies': 'Economics'})
                 yield views.LastPage
 
 

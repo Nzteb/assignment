@@ -2,28 +2,40 @@
 {% load staticfiles otree_tags %}
 
 {% block title %}
-    Page title
+    Questionaire
 {% endblock %}
 
 {% block content %}
+<h4><b>Please fill out the questionaire and answer all questions.</b></h4>
+    <div class="instructions well well-lg">
+        <p>
+            {% formfield player.country %}
+        </p>
+    </div>
+        <div class="instructions well well-lg">
+        <p>
+            {% formfield player.gender %}
 
-    Please enter your country of origin<br>
-    {% formfield player.country %}
-
-    Please enter your gender<br>
-    {% formfield player.gender %}<br>
-
-    Please enter your age<br>
-    {% formfield player.age %}<br>
-
-    Please enter your risk preferences<br>
-    {% formfield player.risk %}
-
-    Please enter your field of studies or enter that you are not a student<br>
-    {% formfield player.nonstudent %} {% formfield player.studies %}
-
-
-
+        </p>
+    </div>
+    <div class="instructions well well-lg">
+        <p>
+            {% formfield player.age %}
+        </p>
+    </div>
+    <div class="instructions well well-lg">
+        <p>
+            {% formfield player.studies %}
+            {% formfield player.nonstudent %}
+        </p>
+    </div>
+    <div class="instructions well well-lg">
+        <p>
+            {% formfield player.risk %}
+        </p>
+    </div>
+    <br>
+    Please press next after answering all questions.
     {% next_button %}
 {% endblock %}
 

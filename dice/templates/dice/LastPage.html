@@ -2,13 +2,17 @@
 {% load staticfiles otree_tags %}
 
 {% block title %}
-    Page title
+    End of the experiment
 {% endblock %}
 
 {% block content %}
 
-    The experiment is finished. Thank you for your participation. Please remain seated until you obtain further instructions from a lab official.
-
+    <div class="instructions well well-lg">
+        <p>
+            <b>The experiment is finished. Thank you for your participation.<br>
+                Please click next, then remain seated until you obtain further instructions from a lab official.</b>
+        </p>
+    </div>
     {% next_button %}
 {% endblock %}
 

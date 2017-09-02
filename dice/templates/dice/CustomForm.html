@@ -1,24 +1,32 @@
 {% extends "global/Page.html" %}
-{% load staticfiles otree_tags %}
+{% load otree_tags staticfiles %}
 
 {% block title %}
-    Page title
+    Roll your die
 {% endblock %}
 
 {% block content %}
 
-Please enter the results of the dice rolling. <br>
-You have a maximum of 5 minutes. After 5 minutes for every die a 1 will be entered <br>
 
+    <div class="instructions well well-lg">
+        <p>
+        Please roll your die now 6 times and enter the results in the below boxes and press the next button when you are done. You have 5 minutes. If you are not
+        finished within 5 minutes for every box a 1 is entered and you earn the lowest amount possible.
+        </p>
 
-<input style="height: 50px; width: 50px; font-size: 40pt;" name="dice1" type="text" pattern="[1-6]">
-<input style="height: 50px; width: 50px; font-size: 40pt;" name="dice2" type="text" pattern="[1-6]">
-<input style="height: 50px; width: 50px; font-size: 40pt;" name="dice3" type="text" pattern="[1-6]">
-<input style="height: 50px; width: 50px; font-size: 40pt;" name="dice4" type="text" pattern="[1-6]">
-<input style="height: 50px; width: 50px; font-size: 40pt;" name="dice5" type="text" pattern="[1-6]">
-<input style="height: 50px; width: 50px; font-size: 40pt;" name="dice6" type="text" pattern="[1-6]">
+    </div>
+    <br>
+    Enter your results in these boxes:<br>
+    <div>
+        <input style="height: 100px; width: 100px; font-size: 90pt;" name="dice1" type="text" pattern="[1-6]">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input style="height: 100px; width: 100px; font-size: 90pt;" name="dice2" type="text" pattern="[1-6]">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input style="height: 100px; width: 100px; font-size: 90pt;" name="dice3" type="text" pattern="[1-6]">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input style="height: 100px; width: 100px; font-size: 90pt;" name="dice4" type="text" pattern="[1-6]">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input style="height: 100px; width: 100px; font-size: 90pt;" name="dice5" type="text" pattern="[1-6]">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input style="height: 100px; width: 100px; font-size: 90pt;" name="dice6" type="text" pattern="[1-6]">
+    </div>
 
-
+    <br><br><br>
     {% next_button %}
 {% endblock %}
 

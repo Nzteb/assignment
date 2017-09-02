@@ -2,25 +2,23 @@
 {% load staticfiles otree_tags %}
 
 {% block title %}
-    Page title
+    Results
 {% endblock %}
 
 {% block content %}
-
-    The overall sum of your dices is {{sum}}.<br>
-    Your payoff is {{player.payoff}}. <br>
-    {% if player.treatment == 'distribution' %}
-        Below, you can see the distribution of the results of the other participants.:
-        <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-    {% endif %}
-
-
+    <div class="instructions well well-lg">
+        <p>
+            The overall sum of your dices is <b>{{sum}}</b> <br>
+            Therefore, you will get payed <b>{{player.payoff}}</b><br>
+                {% if player.treatment == 'distribution' %}
+                    Below, you can see the distribution of the results of the other participants.
+                    <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div><br>
+                {% endif %}
+                Please press the next button to reach the demographic questionaire.
+        </p>
+    </div>
     {% next_button %}
 {% endblock %}
-
-
-
-
 
 {% block scripts %}
 

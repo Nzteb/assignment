@@ -49,37 +49,62 @@ class Group(BaseGroup):
 
 class Player(BasePlayer):
 
-    treatment = models.CharField(doc='Defines the treatment of the player. The treatment is the same for all players in one session and can either be "Private" or "Distribution".',
-                                 choices=['private', 'distribution'])
+    treatment = models.CharField(
+        doc='Defines the treatment of the player. The treatment is the same for all players in one session and can either be "Private" or "Distribution".',
+        choices=['private', 'distribution'])
 
     #All dice inputs shall appear in the database
-    dice1 = models.IntegerField(doc='The input for the 1st dice roll of the player', min=1, max=6)
-    dice2 = models.IntegerField(doc='The input for the 2nd dice roll of the player', min=1, max=6)
-    dice3 = models.IntegerField(doc='The input for the 3rd dice roll of the player', min=1, max=6)
-    dice4 = models.IntegerField(doc='The input for the fourth dice roll of the player', min=1, max=6)
-    dice5 = models.IntegerField(doc='The input for the fift dice roll of the player', min=1, max=6)
-    dice6 = models.IntegerField(doc='The input for the sixt dice roll of the player', min=1, max=6)
+    dice1 = models.IntegerField(
+        doc='The input for the 1st dice roll of the player', min=1, max=6)
+    dice2 = models.IntegerField(
+        doc='The input for the 2nd dice roll of the player', min=1, max=6)
+    dice3 = models.IntegerField(
+        doc='The input for the 3rd dice roll of the player', min=1, max=6)
+    dice4 = models.IntegerField(
+        doc='The input for the fourth dice roll of the player', min=1, max=6)
+    dice5 = models.IntegerField(
+        doc='The input for the fift dice roll of the player', min=1, max=6)
+    dice6 = models.IntegerField(
+        doc='The input for the sixt dice roll of the player', min=1, max=6)
 
-    age = models.IntegerField(doc='The age of the participant',
-                              min=14,
-                              max=110)
-    gender = models.CharField(doc='The gender of the participant',
-                              choices=['male', 'female'])
-    nonstudent = models.BooleanField(doc='1 if the participant is not a student',
-                                     widget=widgets.CheckboxInput(),
-                                     verbose_name='I am not a student')
-    studies = models.CharField(doc='Field of study, if the participant is a student',
-                               blank='True')
-    risk = models.CharField(doc='Risk attitude of the participant. (7 points Likert scale)',
-                            choices=['Agree Very Strongly',
-                                     'Agree Strongly',
-                                     'Agree',
-                                     'Disagree',
-                                     'Disagree Strongly',
-                                     'Disagree Very Strongly'],
-                            widget=widgets.RadioSelectHorizontal(),
-                            verbose_name='"I like taking risks."')
-    country = CountryField(blank='Select your country of origin.')
+    age = models.IntegerField(
+        doc='The age of the participant',
+        min=14,
+        max=110,
+        verbose_name='Please enter your age.')
+
+    gender = models.CharField(
+        doc='The gender of the participant',
+        choices=['Male', 'Female'],
+        widget=widgets.RadioSelect(),
+        verbose_name='What is your gender?')
+
+    nonstudent = models.BooleanField(
+        doc='1 if the participant is not a student',
+        widget=widgets.CheckboxInput(),
+        verbose_name='Click if you are not a student.')
+
+    studies = models.CharField(
+        doc='Field of study, if the participant is a student',
+        blank='True',
+        verbose_name='Enter your field of study if you are a student. Leave blank if you are not a student')
+
+    risk = models.CharField(
+        doc='Risk attitude of the participant. (7 points Likert scale)',
+        choices=['Agree Very Strongly',
+                 'Agree Strongly',
+                 'Agree',
+                 'Disagree',
+                 'Disagree Strongly',
+                 'Disagree Very Strongly'],
+        widget=widgets.RadioSelectHorizontal(),
+        verbose_name='How strong do you agree/disagree with the following statement: "I like taking risks."?')
+
+    #note: if you implement a 'doc' parameter this will throw an exception
+    country = CountryField(
+        blank=False,
+        verbose_name='What is the country of your origin?')
+
     #Note: payoff is calculated in views by using this function
     def return_sum(self):
         return sum ([self.dice1, self.dice2, self.dice3, self.dice4, self.dice5, self.dice6])

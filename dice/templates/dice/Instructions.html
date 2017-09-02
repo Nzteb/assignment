@@ -1,18 +1,45 @@
 {% extends "global/Page.html" %}
-{% load otree_tags %}
+{% load otree_tags staticfiles %}
+
 
 {% block title %}
-    Instructions
+    Introduction to the Experiment
 {% endblock %}
 
 
 {% block content %}
+
+    <div class="instructions well well-lg">
+
         {% if player.treatment == 'private' %}
-            The type of this experiment is "private":<br>
-            No player will have any information about what the other players earn or input. To that end, no histogramm will be shown.
+            <h3 class="panel-sub-heading">
+                Instructions <small>(private treatment)</small>
+            </h3>
         {% else %}
-            The type of this exeriment is "distribution":<br>
-            A Histogramm will be shown at the end of the game, where everyone can see, what the other players in the experiment inputted.
+            <h3 class="panel-sub-heading">
+                Instructions <small>(distribution treatment)</small>
+            </h3>
         {% endif %}
-        {% next_button %}
+
+        {% if player.treatment == 'private' %}
+            <p>
+                In this experiment you are given a real die. You will then subsequently roll the die and enter the respective value
+                in a form which you will see on the next page. You will be payed the half of the sum of all your rollings in Euro.
+                The type of this experiment is "private": No participant will have any information about what the other players input or earn.
+            </p>
+        {% else %}
+            <p>
+                In this experiment you are given a real die. You will then subsequently roll the die and enter the respective value
+                in a form which you will see on the next page. You will be payed the half of the sum of all your rolls in Euro.
+                The type of this experiment is "distribution": A Histogramm will be shown at the end of the game, where everyone can
+                see what the other participants in the experiment inputted.
+            </p>
+        {% endif %}
+        <br>
+        Please press the next button after reading the instructions to start the experiment.
+    </div>
+    <br>
+
+
+    {% next_button %}
 {% endblock %}
