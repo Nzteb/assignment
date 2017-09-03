@@ -25,21 +25,12 @@ class ResultsWaitPage(WaitPage):
 
 class Results(Page):
     def vars_for_template(self):
-        #TODO: Substantial objection: the histogramm data is calculated by each player when he is on this page
-        #TODO: it would be nicer if this is only done once. But if I write a function in models.Subsession and call this from here,
-        #TODO than exactly the same thing happens because every player is calling this function then from here, right?
+        #note: we need the empty data dictionaire in private treatment, otherwise exception will be thrown
         data = {}
-        #calculate histogramm date in distribution treatment
+        #calculate histogramm data in distribution treatment
         if self.player.treatment == 'distribution':
-            data = {6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0, 13: 0, 14: 0, 15:0, 16: 0,
-                    17: 0, 18: 0, 19: 0, 20: 0, 21: 0, 22: 0, 23: 0, 24: 0, 25: 0, 26: 0,
-                    27: 0, 28: 0, 29: 0, 30: 0, 31: 0, 32: 0, 33: 0, 34: 0, 35: 0, 36: 0}
-            for player in self.subsession.get_players():
-                sum = player.return_sum()
-                data[sum] += 1
-        #data holds absolute frequencies, in the dict value this is divided by the number of players
-        #note: in private treatment we need the empty data = {} otherwise the function throws an exception
-        return {'sum':self.player.return_sum(), 'histogramm_data': [{'name':'Frequency','data':[value/self.session.config['num_demo_participants'] for value in list(data.values())]}]}
+            data = self.subsession.create_histogramm_data()
+        return {'sum':self.player.return_sum(), 'histogramm_data': [{'name':'Frequency','data':data}]}
 
 
 class Demographics(Page):
