@@ -7,9 +7,8 @@ import random
 
 from django_countries.fields import CountryField
 
-
-
 author = 'Patrick Betz'
+
 
 doc = """
 A dice experiment
