@@ -118,5 +118,4 @@ class Player(BasePlayer):
 
     #Note: payoff is calculated in views by using this function
     def return_sum(self):
-        self.get
         return sum ([self.dice1, self.dice2, self.dice3, self.dice4, self.dice5, self.dice6])
