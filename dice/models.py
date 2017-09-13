@@ -50,7 +50,7 @@ class Subsession(BaseSubsession):
         for player in self.get_players():
             sum = player.return_sum()
             data[sum] += 1
-        return [value / self.session.config['num_demo_participants'] for value in list(data.values())]
+        return [value / len(self.get_players()) for value in list(data.values())]
 
 
 class Group(BaseGroup):
@@ -110,11 +110,14 @@ class Player(BasePlayer):
         widget=widgets.RadioSelectHorizontal(),
         verbose_name='How strong do you agree/disagree with the following statement: "I like taking risks."?')
 
+    #TODO: is there a doc parameter for django as 'doc' doesnt work here?
     #note: if you implement a 'doc' parameter this will throw an exception
     country = CountryField(
+        #todo: Blank = True?
         blank=False,
         verbose_name='What is the country of your origin?')
 
     #Note: payoff is calculated in views by using this function
     def return_sum(self):
+        self.get
         return sum ([self.dice1, self.dice2, self.dice3, self.dice4, self.dice5, self.dice6])

@@ -36,6 +36,13 @@ class Results(Page):
 class Demographics(Page):
     form_model = models.Player
     form_fields = ['nonstudent', 'gender', 'age', 'risk', 'country','studies']
+    def error_message(self, values):
+        if values['studies'] == '' and values['nonstudent'] == False:
+            return ('Please click the box below if you are not a student. If you are a student please enter your field of studies.')
+        if values['studies'] != '' and values['nonstudent'] == True:
+            return('You entered a field of study and that you are not a student. Please leave the studies field blank if you are not a student.')
+
+
 
 
 class LastPage(Page):
