@@ -109,10 +109,9 @@ class Player(BasePlayer):
         widget=widgets.RadioSelectHorizontal(),
         verbose_name='How strong do you agree/disagree with the following statement: "I like taking risks."?')
 
-    #TODO: is there a doc parameter for django as 'doc' doesnt work here?
     #note: if you implement a 'doc' parameter this will throw an exception
     country = CountryField(
-        #todo: Blank = True?
+        #dont permit to not enter a country
         blank=False,
         verbose_name='What is the country of your origin?')
 

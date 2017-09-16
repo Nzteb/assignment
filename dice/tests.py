@@ -23,18 +23,18 @@ class PlayerBot(Bot):
         if self.case == 'check_html':
             if treatment == 'private':
                 #Has to be displayed
-                assert ('The type of this experiment is "private"' in self.html)
+                assert ('No participant will have any information about what the other players input or earn.' in self.html)
                 #Must not be displayed
-                assert ('The type of this experiment is "distribution"' not in self.html)
+                assert ('A Histogramm will be shown at the end of the game, where everyone can see what the other participants in the experiment inputted.' not in self.html)
                 yield views.Instructions
                 yield (views.CustomForm, {'dice1':2, 'dice2':2, 'dice3':2, 'dice4':2, 'dice5':2, 'dice6':2})
                 #must not be displayed
                 assert ('Below, you can see the distribution of the results of the other participants.' not  in self.html)
             elif treatment == 'distribution':
                 #Has to be displayed
-                assert ('The type of this experiment is "distribution"' in self.html)
+                assert ('A Histogramm will be shown at the end of the game, where everyone can see what the other participants in the experiment inputted.' in self.html)
                 #Must not be displayed
-                assert ('The type of this experiment is "private"' not in self.html)
+                assert ('No participant will have any information about what the other players input or earn.' not in self.html)
                 yield views.Instructions
                 yield (views.CustomForm, {'dice1':2, 'dice2':2, 'dice3':2, 'dice4':2, 'dice5':2, 'dice6':2})
                 #has to be displayed
@@ -66,8 +66,15 @@ class PlayerBot(Bot):
                     yield SubmissionMustFail(views.Demographics,{'nonstudent':True, 'gender':'Male', 'age':wrong_age, 'risk':'Agree', 'country':'DE','studies':''})
                 #ensure that country of origin cannot be blank
                 yield SubmissionMustFail(views.Demographics,{'nonstudent': True, 'gender': 'Female', 'age': 27, 'risk': 'Agree','country': '', 'studies': ''})
+                # -- test dynamic form field validation for the nonstudent checkbox --
+                #ensure that if one clicks nonstudent he cannot enter something
+                yield SubmissionMustFail(views.Demographics, {'nonstudent': True, 'gender': 'Female', 'age': 26, 'risk': 'Agree', 'country': 'DE', 'studies': 'Economics'})
+                #ensure that if one does not click nonstudent (so he is a student) that he must enter something in field of studies
+                yield SubmissionMustFail(views.Demographics,{'nonstudent': False, 'gender': 'Female', 'age': 26, 'risk': 'Agree', 'country': 'DE', 'studies': ''})
+
+
                 #finish the experiment correctly
                 yield (views.Demographics, {'nonstudent': False, 'gender': 'Female', 'age': 26, 'risk': 'Agree', 'country': 'DE', 'studies': 'Economics'})
-                yield views.LastPage
+
 
 
