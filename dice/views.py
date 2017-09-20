@@ -43,8 +43,6 @@ class Demographics(Page):
             return('You entered a field of study and that you are not a student. Please leave the studies field blank if you are not a student.')
 
 
-
-
 class LastPage(Page):
     pass
 
