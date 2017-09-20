@@ -18,6 +18,7 @@ class PlayerBot(Bot):
     cases = ['check_html' , 'calculations', 'formvalidationfails']
 
     def play_round(self):
+
         #case1 'check_html': check if the templates are correctly displayed for the different treatments
         treatment = self.player.treatment
         if self.case == 'check_html':
@@ -40,6 +41,7 @@ class PlayerBot(Bot):
                 #has to be displayed
                 assert ('Below, you can see the distribution of the results of the other participants.' in self.html)
                 yield views.Results
+
         #case2 'calculations': Check if payoffcalculation works, check if histogram data is calculated correctly
         elif self.case == 'calculations':
                 yield views.Instructions
@@ -49,10 +51,11 @@ class PlayerBot(Bot):
                     #check if the histogramm data is calculated correctly. Only 1's inputted so the value of the first element of the data list must be 1 (100 percent)
                     #TODO: There is no better way to check the data of the Histogramm, I asked Chris
                     assert ('[1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]' in self.html)
-        #case3 'formvalidationfails': check that only integers from 1-6 and no chars can be entered for the dices, check other forms
+
+       #case3 'formvalidationfails': check that only integers from 1-6 and no chars can be entered for the dices, check other forms
         elif self.case == 'formvalidationfails':
                 yield views.Instructions
-                #ensure for every single dice that no 7 or 0 or character can be inputted
+                #ensure for every single die that no 7 or 0 or character can be inputted
                 for i in range(6):
                     for wrong_input in [7,0,'a']:
                         sl = [1, 1, 1, 1, 1, 1]
@@ -66,7 +69,8 @@ class PlayerBot(Bot):
                     yield SubmissionMustFail(views.Demographics,{'nonstudent':True, 'gender':'Male', 'age':wrong_age, 'risk':'Agree', 'country':'DE','studies':''})
                 #ensure that country of origin cannot be blank
                 yield SubmissionMustFail(views.Demographics,{'nonstudent': True, 'gender': 'Female', 'age': 27, 'risk': 'Agree','country': '', 'studies': ''})
-                # -- test dynamic form field validation for the nonstudent checkbox --
+
+                # -- test dynamic form field validation for the nonstudent checkbox --#
                 #ensure that if one clicks nonstudent he cannot enter something
                 yield SubmissionMustFail(views.Demographics, {'nonstudent': True, 'gender': 'Female', 'age': 26, 'risk': 'Agree', 'country': 'DE', 'studies': 'Economics'})
                 #ensure that if one does not click nonstudent (so he is a student) that he must enter something in field of studies

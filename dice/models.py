@@ -23,7 +23,7 @@ class Constants(BaseConstants):
 
 class Subsession(BaseSubsession):
 
-    #will only be called in creating_session if treatment is wrongly entered or not entered
+    #Will only be called in creating_session if treatment is wrongly entered or not entered
     def assign_treatment_random(self):
         treatment = random.choice(['private', 'distribution'])
         for player in self.get_players():
@@ -36,12 +36,12 @@ class Subsession(BaseSubsession):
             if treatment_input  == 'private' or treatment_input == 'distribution':
                 for player in self.get_players():
                     player.treatment = treatment_input
-            else: #nonvalid treatment was entered in settings.py
+            else: #Nonvalid treatment was entered in settings.py
                 self.assign_treatment_random()
-        else: #no treatment was entered in settings.py
+        else: #No treatment was entered in settings.py
             self.assign_treatment_random()
 
-    #returns a list with the relative frequency values of the histogramm
+    #Returns a list with the relative frequency values of the histogramm
     def create_histogramm_data(self):
         data = {6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0, 13: 0, 14: 0, 15: 0, 16: 0,
                 17: 0, 18: 0, 19: 0, 20: 0, 21: 0, 22: 0, 23: 0, 24: 0, 25: 0, 26: 0,
@@ -109,9 +109,9 @@ class Player(BasePlayer):
         widget=widgets.RadioSelectHorizontal(),
         verbose_name='How strong do you agree/disagree with the following statement: "I like taking risks."?')
 
-    #note: if you implement a 'doc' parameter this will throw an exception
+    #Note: if you implement a 'doc' parameter this will throw an exception
     country = CountryField(
-        #dont permit to not enter a country
+        #I decided to not permit not entering a country
         blank=False,
         verbose_name='What is the country of your origin?')
 

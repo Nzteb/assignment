@@ -25,9 +25,9 @@ class ResultsWaitPage(WaitPage):
 
 class Results(Page):
     def vars_for_template(self):
-        #note: we need the empty data dictionaire in private treatment, otherwise exception will be thrown
+        #Note: we need the empty data dictionaire in private treatment, otherwise exception will be thrown
         data = {}
-        #calculate histogramm data in distribution treatment
+        #Calculate histogramm data in distribution treatment
         if self.player.treatment == 'distribution':
             data = self.subsession.create_histogramm_data()
         return {'sum':self.player.return_sum(), 'histogramm_data': [{'name':'Frequency','data':data}]}
