@@ -4,18 +4,20 @@ from ._builtin import Bot
 from .models import Constants
 from . import views
 from otree.api import SubmissionMustFail
+from otree.api import Submission
 
 
 class PlayerBot(Bot):
 
     #Note:
-    #Run 'otree test' to run both session_configs entries. This will test both treatments of the app.
+    #Run 'otree test' to run both session_config entries. This will test both treatments of the app.
     #The most templates are the same in both treatments so they are not tested seperately
 
 
-    #Choose test cases and insert in list: 'check_html' , 'calculations', 'formvalidationfails'
-    #All cases will be run if lists contains all cases
-    cases = ['check_html' , 'calculations', 'formvalidationfails']
+    #Choose test cases and insert in list: 'check_html' , 'calculations', 'formvalidationfails', 'timeout'
+    #All cases will be tested if lists contains all cases
+    cases = ['check_html', 'calculations', 'formvalidationfails','timeout']
+
 
     def play_round(self):
 
@@ -66,19 +68,32 @@ class PlayerBot(Bot):
                 yield(views.Results)
                 #ensure that only correct age input is possible
                 for wrong_age in [10000, 'whats up', '!!']:
-                    yield SubmissionMustFail(views.Demographics,{'nonstudent':True, 'gender':'Male', 'age':wrong_age, 'risk':'Agree', 'country':'DE','studies':''})
+                    yield SubmissionMustFail(views.Demographics,{'nonstudent':True, 'gender':'Male', 'age':wrong_age, 'risk':'Entirely Disagree', 'country':'DE','studies':''})
                 #ensure that country of origin cannot be blank
-                yield SubmissionMustFail(views.Demographics,{'nonstudent': True, 'gender': 'Female', 'age': 27, 'risk': 'Agree','country': '', 'studies': ''})
+                yield SubmissionMustFail(views.Demographics,{'nonstudent': True, 'gender': 'Female', 'age': 27, 'risk': 'Entirely Disagree','country': '', 'studies': ''})
 
-                # -- test dynamic form field validation for the nonstudent checkbox --#
+                # -- test dynamic form field validation for the nonstudent checkbox -- #
                 #ensure that if one clicks nonstudent he cannot enter something
-                yield SubmissionMustFail(views.Demographics, {'nonstudent': True, 'gender': 'Female', 'age': 26, 'risk': 'Agree', 'country': 'DE', 'studies': 'Economics'})
+                yield SubmissionMustFail(views.Demographics, {'nonstudent': True, 'gender': 'Female', 'age': 26, 'risk': 'Entirely Disagree', 'country': 'DE', 'studies': 'Economics'})
                 #ensure that if one does not click nonstudent (so he is a student) that he must enter something in field of studies
-                yield SubmissionMustFail(views.Demographics,{'nonstudent': False, 'gender': 'Female', 'age': 26, 'risk': 'Agree', 'country': 'DE', 'studies': ''})
-
+                yield SubmissionMustFail(views.Demographics,{'nonstudent': False, 'gender': 'Female', 'age': 26, 'risk': 'Entirely Disagree', 'country': 'DE', 'studies': ''})
 
                 #finish the experiment correctly
-                yield (views.Demographics, {'nonstudent': False, 'gender': 'Female', 'age': 26, 'risk': 'Agree', 'country': 'DE', 'studies': 'Economics'})
+                yield (views.Demographics, {'nonstudent': False, 'gender': 'Female', 'age': 26, 'risk': 'Entirely Disagree', 'country': 'DE', 'studies': 'Economics'})
+
+        #Case4 'timeout' test forced assignment, different html displayed after timeout
+        elif self.case == 'timeout':
+            yield views.Instructions
+            yield Submission(views.CustomForm, timeout_happened=True)
+            #check the assigning of the timeout variable
+            assert self.player.timeout == True
+            #ensure that the players dice inputs have enforced to be 1 for every die roll
+            for die in [self.player.dice1, self.player.dice2, self.player.dice3, self.player.dice4, self.player.dice5, self.player.dice6]:
+                assert die == 1
+            #check that the correct html is displayed
+            assert 'You did not enter anything on the last page' in self.html
+            assert 'The overall sum of your dice is' not in self.html
+
 
 
 

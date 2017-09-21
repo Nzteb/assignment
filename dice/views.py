@@ -9,28 +9,36 @@ class Instructions(Page):
 
 
 class CustomForm(Page):
+
     form_model = models.Player
     form_fields = ['dice1', 'dice2', 'dice3', 'dice4', 'dice5', 'dice6']
-    timeout_seconds = 300
+    #Timout appears in both treatments s.t. decisions are not biased through different experiment conditions
+    timeout_seconds = 10
     timeout_submission = {'dice1':1, 'dice2':1, 'dice3':1, 'dice4':1, 'dice5':1, 'dice6':1}
     def before_next_page(self):
         self.player.payoff = self.player.return_sum()/2
+        if self.timeout_happened:
+            self.player.timeout = True
 
 
-#Wait page is needed in the distribution treatment, so that the histogramm will be calculated with data of all players
+#Wait page in the distribution treatment s.t. the histogramm will be calculated with data of all players
 class ResultsWaitPage(WaitPage):
     def is_displayed(self):
         return self.player.treatment == 'distribution'
+    #Calculate histogramm data and store
+    def after_all_players_arrive(self):
+        self.session.vars['hist_data'] = self.subsession.create_histogramm_data()
 
 
 class Results(Page):
+
     def vars_for_template(self):
-        #Note: we need the empty data dictionaire in private treatment, otherwise exception will be thrown
-        data = {}
-        #Calculate histogramm data in distribution treatment
         if self.player.treatment == 'distribution':
-            data = self.subsession.create_histogramm_data()
-        return {'sum':self.player.return_sum(), 'histogramm_data': [{'name':'Frequency','data':data}]}
+            #Instead of calculating on his own, each player just looks at the stored hist data
+            data = self.session.vars['hist_data']
+            return {'sum':self.player.return_sum(), 'histogramm_data': [{'name':'Frequency','data':data}]}
+        elif self.player.treatment == 'private':
+            return {'sum': self.player.return_sum()}
 
 
 class Demographics(Page):

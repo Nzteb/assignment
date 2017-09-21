@@ -49,6 +49,7 @@ class Subsession(BaseSubsession):
         for player in self.get_players():
             sum = player.return_sum()
             data[sum] += 1
+        #Divide absolute frequency by number of players to get relative frequency
         return [value / len(self.get_players()) for value in list(data.values())]
 
 
@@ -100,14 +101,18 @@ class Player(BasePlayer):
 
     risk = models.CharField(
         doc='Risk attitude of the participant. (7 points Likert scale)',
-        choices=['Agree Very Strongly',
-                 'Agree Strongly',
-                 'Agree',
-                 'Disagree',
-                 'Disagree Strongly',
-                 'Disagree Very Strongly'],
+        choices=['Entirely Agree',
+                 'Mostly Agree',
+                 'Somewhat Agree',
+                 'Neither Agree nor Disagree',
+                 'Somewhat Disagree',
+                 'Mostly Disagree',
+                 'Entirely Disagree'],
         widget=widgets.RadioSelectHorizontal(),
         verbose_name='How strong do you agree/disagree with the following statement: "I like taking risks."?')
+
+    timeout = models.BooleanField(
+        doc="Equals True if the participant did not enter any results. She is determined to have lowest payoff possible.")
 
     #Note: if you implement a 'doc' parameter this will throw an exception
     country = CountryField(
@@ -118,3 +123,5 @@ class Player(BasePlayer):
     #Note: payoff is calculated in views by using this function
     def return_sum(self):
         return sum ([self.dice1, self.dice2, self.dice3, self.dice4, self.dice5, self.dice6])
+
+
