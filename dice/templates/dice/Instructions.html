@@ -21,21 +21,21 @@
             </h3>
         {% endif %}
 
-        {% if player.treatment == 'private' %}
-            <p>
-                In this experiment you are given a real die. You will then subsequently roll the die 6 times and enter the respective value
-                in a form which is displayed on the next page. You will be payed the half of the sum of all your rollings in Euro.
+        <p>
+            In this experiment you are given a real die. You will then subsequently roll the die 6 times and enter the respective value
+            in a form which is displayed on the next page. You will be payed the half of the sum of all your rolls in Euro.
+            You will have {{Constants.timeoutminutes}} {% if Constants.timeoutminutes == 1 %}minute{%else%}minutes{%endif%} to complete.
+            If you cannot complete in {{Constants.timeoutminutes}} {% if Constants.timeoutminutes == 1 %}minute{%else%}minutes{%endif%}, you
+            will not receive any payoff.
+            {% if player.treatment == 'private' %}
                 <b>No participant will have any information about what the other players input or earn.</b>
-            </p>
-        {% else %}
-            <p>
-                In this experiment you are given a real die. You will then subsequently roll the die 6 times and enter the respective value
-                in a form which is displayed on the next page. You will be payed the half of the sum of all your rolls in Euro.
+            {% else %}
                 <b>A Histogramm will be shown at the end of the game, where everyone can see what the other participants in the experiment inputted.</b>
-            </p>
-        {% endif %}
-        <br>
-        Please press the next button after reading the instructions to start the experiment.
+            {% endif %}
+            <br>
+            <br>
+            Please press the next button after reading the instructions to start the experiment.
+        </p>
     </div>
     <br>
 

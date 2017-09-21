@@ -19,6 +19,9 @@ class Constants(BaseConstants):
     name_in_url = 'dice'
     players_per_group = None
     num_rounds = 1
+    #Please enter the number of minutes you want to allow for rolling the dice
+    timeoutminutes = 5
+    timeoutseconds = 60*timeoutminutes
 
 
 class Subsession(BaseSubsession):
@@ -42,15 +45,25 @@ class Subsession(BaseSubsession):
             self.assign_treatment_random()
 
     #Returns a list with the relative frequency values of the histogramm
+    #Only players who did not time out are regarded s.t. the histogramm is correct
     def create_histogramm_data(self):
         data = {6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0, 13: 0, 14: 0, 15: 0, 16: 0,
                 17: 0, 18: 0, 19: 0, 20: 0, 21: 0, 22: 0, 23: 0, 24: 0, 25: 0, 26: 0,
                 27: 0, 28: 0, 29: 0, 30: 0, 31: 0, 32: 0, 33: 0, 34: 0, 35: 0, 36: 0}
+
+        num_no_timout = 0
         for player in self.get_players():
-            sum = player.return_sum()
-            data[sum] += 1
-        #Divide absolute frequency by number of players to get relative frequency
-        return [value / len(self.get_players()) for value in list(data.values())]
+            #only regard players with no timeout
+            if player.timeout == False:
+                sum = player.return_sum()
+                data[sum] += 1
+                #count players with no timeout
+                num_no_timout += 1
+        if num_no_timout != 0:
+            # Divide absolute frequency of players with no timeout by number of players with no timeout to get relative frequency
+            return [value / num_no_timout for value in list(data.values())]
+        else: #all players had a timout. Display list with 0`s to not force an exception
+            return[value for value in list(data.values())]
 
 
 class Group(BaseGroup):
@@ -112,7 +125,8 @@ class Player(BasePlayer):
         verbose_name='How strong do you agree/disagree with the following statement: "I like taking risks."?')
 
     timeout = models.BooleanField(
-        doc="Equals True if the participant did not enter any results. She is determined to have lowest payoff possible.")
+        default=False,
+        doc="Equals True if the participant did not enter any results. She then gets a payoff of zero.")
 
     #Note: if you implement a 'doc' parameter this will throw an exception
     country = CountryField(

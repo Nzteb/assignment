@@ -13,12 +13,12 @@ class CustomForm(Page):
     form_model = models.Player
     form_fields = ['dice1', 'dice2', 'dice3', 'dice4', 'dice5', 'dice6']
     #Timout appears in both treatments s.t. decisions are not biased through different experiment conditions
-    timeout_seconds = 10
-    timeout_submission = {'dice1':1, 'dice2':1, 'dice3':1, 'dice4':1, 'dice5':1, 'dice6':1}
+    #If a player has a timeout the otree default submits 0`s for all the dice.
+    timeout_seconds = Constants.timeoutseconds
     def before_next_page(self):
-        self.player.payoff = self.player.return_sum()/2
         if self.timeout_happened:
             self.player.timeout = True
+        self.player.payoff = self.player.return_sum() / 2
 
 
 #Wait page in the distribution treatment s.t. the histogramm will be calculated with data of all players

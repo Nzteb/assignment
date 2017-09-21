@@ -10,8 +10,9 @@
 
     <div class="instructions well well-lg">
         <p>
-        Please roll your die now 6 times and enter the results in the below boxes and press the next button after you finished. You have 5 minutes. If you are not
-        finished within 5 minutes for every box a 1 is entered and you earn the lowest amount possible.
+        Please roll your die now 6 times and enter the results in the below boxes and press the next button after you finished.
+       You have {{Constants.timeoutminutes}} {% if Constants.timeoutminutes == 1 %}minute{%else%}minutes{%endif%}.
+       If you are not finished within {{Constants.timeoutminutes}} {% if Constants.timeoutminutes == 1 %}minute{%else%}minutes{%endif%} you will not get any payoff.
         </p>
 
     </div>

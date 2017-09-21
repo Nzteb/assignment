@@ -21,6 +21,14 @@ class PlayerBot(Bot):
 
     def play_round(self):
 
+        # function checks that if timout minutes is 1 the string 'minute' (and not 'minutes') is displayed on a page
+        def check_minutes_string():
+            if Constants.timeoutminutes == 1:
+                #note the whitespace otherwise 'minute' is in 'minutes'
+                assert 'minute ' in self.html
+            else:
+                assert 'minute ' not in self.html
+
         #Case1 'check_html': check if the templates are correctly displayed for the different treatments
         treatment = self.player.treatment
         if self.case == 'check_html':
@@ -29,20 +37,27 @@ class PlayerBot(Bot):
                 assert ('No participant will have any information about what the other players input or earn.' in self.html)
                 #Must not be displayed
                 assert ('A Histogramm will be shown at the end of the game, where everyone can see what the other participants in the experiment inputted.' not in self.html)
+                check_minutes_string()
                 yield views.Instructions
+                check_minutes_string()
                 yield (views.CustomForm, {'dice1':2, 'dice2':2, 'dice3':2, 'dice4':2, 'dice5':2, 'dice6':2})
                 #must not be displayed
                 assert ('Below, you can see the distribution of the results of the other participants.' not  in self.html)
+
             elif treatment == 'distribution':
                 #Has to be displayed
                 assert ('A Histogramm will be shown at the end of the game, where everyone can see what the other participants in the experiment inputted.' in self.html)
                 #Must not be displayed
                 assert ('No participant will have any information about what the other players input or earn.' not in self.html)
+                check_minutes_string()
                 yield views.Instructions
+                check_minutes_string()
                 yield (views.CustomForm, {'dice1':2, 'dice2':2, 'dice3':2, 'dice4':2, 'dice5':2, 'dice6':2})
                 #has to be displayed
                 assert ('Below, you can see the distribution of the results of the other participants.' in self.html)
+                check_minutes_string()
                 yield views.Results
+
 
         #Case2 'calculations': Check if payoffcalculation works, check if histogram data is calculated correctly
         elif self.case == 'calculations':
@@ -89,7 +104,8 @@ class PlayerBot(Bot):
             assert self.player.timeout == True
             #ensure that the players dice inputs have enforced to be 1 for every die roll
             for die in [self.player.dice1, self.player.dice2, self.player.dice3, self.player.dice4, self.player.dice5, self.player.dice6]:
-                assert die == 1
+                assert die == 0
+            assert self.player.payoff == 0
             #check that the correct html is displayed
             assert 'You did not enter anything on the last page' in self.html
             assert 'The overall sum of your dice is' not in self.html
