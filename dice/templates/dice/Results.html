@@ -1,6 +1,5 @@
 {% extends "global/Page.html" %}
 {% load staticfiles otree_tags %}
-{% load staticfiles %}
 
 {% block title %}
     Results
@@ -31,23 +30,9 @@
 
 {% block scripts %}
 
+    <script src="{% static "dice/highcharts.js" %}"></script>
 
-
-
-        <script src="{% static "dice/highcharts.js" %}"/>
-        <script src="{% static "dice/highcharts.js" %}"/>
-        <script src="{% static 'dice/highcharts.js' %}"/>
-        <script src="{ static 'dice/highcharts.js' }"/>
-
-    <script>
-
-                <script src="{% static "dice/highcharts.js" %}"/>
-                <script src="{% static "dice/highcharts.js" %}"/>
-                <script src="{% static "dice/highcharts.js" %}"/>
-                <script src="{ static 'dice/highcharts.js' }"/>
-                <script src="{% static 'dice/highcharts.js' %}"/>
-
-
+    <script type="text/javascript">
 
                 Highcharts.chart('container', {
                     chart: {
