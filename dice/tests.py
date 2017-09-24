@@ -100,13 +100,14 @@ class PlayerBot(Bot):
         elif self.case == 'timeout':
             yield views.Instructions
             yield Submission(views.CustomForm, timeout_happened=True)
-            #check the assigning of the timeout variable
+            #Check the assigning of the timeout variable
             assert self.player.timeout == True
-            #ensure that the players dice inputs have enforced to be 1 for every die roll
+            #Ensure that the players dice inputs have enforced to be 0 for every die roll
+            #Note: a input of 0 for the dice is not allowed for ordinary players, this only happens if a timeout appears
             for die in [self.player.dice1, self.player.dice2, self.player.dice3, self.player.dice4, self.player.dice5, self.player.dice6]:
                 assert die == 0
             assert self.player.payoff == 0
-            #check that the correct html is displayed
+            #Check that the correct html is displayed
             assert 'You did not enter anything on the last page' in self.html
             assert 'The overall sum of your dice is' not in self.html
 

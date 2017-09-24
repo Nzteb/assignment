@@ -112,17 +112,21 @@ class Player(BasePlayer):
         blank='True',
         verbose_name='Enter your field of study if you are a student. Leave blank if you are not a student')
 
-    risk = models.CharField(
-        doc='Risk attitude of the participant. (7 points Likert scale)',
-        choices=['Entirely Agree',
-                 'Mostly Agree',
-                 'Somewhat Agree',
-                 'Neither Agree nor Disagree',
-                 'Somewhat Disagree',
-                 'Mostly Disagree',
-                 'Entirely Disagree'],
-        widget=widgets.RadioSelectHorizontal(),
-        verbose_name='How strong do you agree/disagree with the following statement: "I like taking risks."?')
+
+    risk = models.CharField()
+
+
+    # risk = models.CharField(
+    #     doc='Risk attitude of the participant. (7 points Likert scale)',
+    #     choices=['Entirely Agree',
+    #              'Mostly Agree',
+    #              'Somewhat Agree',
+    #              'Neither Agree nor Disagree',
+    #              'Somewhat Disagree',
+    #              'Mostly Disagree',
+    #              'Entirely Disagree'],
+    #     widget=widgets.RadioSelectHorizontal(),
+    #     verbose_name='How strong do you agree/disagree with the following statement: "I like taking risks."?')
 
     timeout = models.BooleanField(
         default=False,

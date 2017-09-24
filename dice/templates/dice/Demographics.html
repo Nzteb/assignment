@@ -30,13 +30,33 @@
         </p>
     </div>
     <div class="instructions well well-lg">
-        <p>
-            {% formfield player.risk %}
-        </p>
+
+    Please indicate how strong you agree/disagree with the following statement:<br>
+    <b>I like taking risks.</b>
+        <table>
+     <tr>
+        <td style="padding:0 15px 0 15px;"><input type="radio" name="risk" id="risk_1" value="Entirely Agree"><br /><label for="risk_1" style="font-size: 13px"> Entirely<br> Agree </label></td>
+        <td style="padding:0 15px 0 15px;"><input type="radio" name="risk" id="risk_2" value="Mostly Agree"><br /><label for="risk_2" style="font-size: 13px"> Mostly <br> Agree </label></td>
+        <td style="padding:0 15px 0 15px;"><input type="radio" name="risk" id="risk_3" value="Somewhat Agree"><br /><label for="risk_3" style="font-size: 13px"> Somewhat <br> Agree </label></td>
+        <td style="padding:0 15px 0 15px;"><input type="radio" name="risk" id="risk_4" value="Neither Agree nor Disagree"><br /><label for="risk_4" style="font-size: 13px"> Neither Agree <br> nor Disagree </label></td>
+        <td style="padding:0 15px 0 15px;"><input type="radio" name="risk" id="risk_5" value="Somewhat Disagree"><br /><label for="risk_5" style="font-size: 13px"> Somewhat <br> Disagree </label></td>
+        <td style="padding:0 15px 0 15px;"><input type="radio" name="risk" id="risk_6" value="Mostly Disagree"><br /><label for="risk_6" style="font-size: 13px"> Mostly <br> Disagree </label></td>
+        <td style="padding:0 15px 0 15px;"><input type="radio" name="risk" id="risk_7" value="Entirely Disagree"><br /><label for="risk_7" style="font-size: 13px"> Entirely <br> Disagree </label></td>
+    </tr>
+ </table>
+    {{form.risk.errors}}
     </div>
     <br>
     Please press next after answering all questions.
     {% next_button %}
 {% endblock %}
 
+
+{% block scripts %}
+
+  <style type="text/css">
+        tr { text-align:center }
+    </style>
+
+{% endblock %}
 
