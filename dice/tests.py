@@ -65,14 +65,14 @@ class PlayerBot(Bot):
                 yield (views.CustomForm, {'dice1': 1, 'dice2': 1, 'dice3': 1, 'dice4': 1, 'dice5': 1, 'dice6': 1})
                 assert self.player.payoff == 3
                 if treatment == 'distribution':
-                    #check if the histogramm data is calculated correctly. Only 1's inputted so the value of the first element of the data list must be 1 (100 percent)
+                    #Check if the histogramm data is calculated correctly. Only 1's inputted so the value of the first element of the data list must be 1 (100 percent)
                     #TODO: There is no better way to check the data of the Histogramm, I asked Chris
                     assert ('[1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]' in self.html)
 
        #Case3 'formvalidationfails': check that only integers from 1-6 and no chars can be entered for the dices, check other forms
         elif self.case == 'formvalidationfails':
                 yield views.Instructions
-                #ensure for every single die that no 7 or 0 or character can be inputted
+                #Ensure for every single die that no 7 or 0 or character can be inputted
                 for i in range(6):
                     for wrong_input in [7,0,'a']:
                         sl = [1, 1, 1, 1, 1, 1]
@@ -81,19 +81,19 @@ class PlayerBot(Bot):
 
                 yield(views.CustomForm, {'dice1': 1, 'dice2': 1, 'dice3': 1, 'dice4': 1, 'dice5': 1, 'dice6': 1} )
                 yield(views.Results)
-                #ensure that only correct age input is possible
+                #Ensure that only correct age input is possible
                 for wrong_age in [10000, 'whats up', '!!']:
                     yield SubmissionMustFail(views.Demographics,{'nonstudent':True, 'gender':'Male', 'age':wrong_age, 'risk':'Entirely Disagree', 'country':'DE','studies':''})
-                #ensure that country of origin cannot be blank
-                yield SubmissionMustFail(views.Demographics,{'nonstudent': True, 'gender': 'Female', 'age': 27, 'risk': 'Entirely Disagree','country': '', 'studies': ''})
+                #Ensure that country of origin cannot be blank
+                yield SubmissionMustFail(views.Demographics,{'nonstudent': False, 'gender': 'Female', 'age': 27, 'risk': 'Entirely Disagree','country': '', 'studies': 'someStuff'})
 
-                # -- test dynamic form field validation for the nonstudent checkbox -- #
-                #ensure that if one clicks nonstudent he cannot enter something
+                # -- Test dynamic form field validation for the nonstudent checkbox -- #
+                #Ensure that if one clicks nonstudent he cannot enter a study subject
                 yield SubmissionMustFail(views.Demographics, {'nonstudent': True, 'gender': 'Female', 'age': 26, 'risk': 'Entirely Disagree', 'country': 'DE', 'studies': 'Economics'})
-                #ensure that if one does not click nonstudent (so he is a student) that he must enter something in field of studies
+                #Ensure that if one does not click nonstudent (so he is a student) that he must enter something in field of studies
                 yield SubmissionMustFail(views.Demographics,{'nonstudent': False, 'gender': 'Female', 'age': 26, 'risk': 'Entirely Disagree', 'country': 'DE', 'studies': ''})
 
-                #finish the experiment correctly
+                #Finish the experiment correctly
                 yield (views.Demographics, {'nonstudent': False, 'gender': 'Female', 'age': 26, 'risk': 'Entirely Disagree', 'country': 'DE', 'studies': 'Economics'})
 
         #Case4 'timeout' test forced assignment, different html displayed after timeout
@@ -103,12 +103,12 @@ class PlayerBot(Bot):
             #Check the assigning of the timeout variable
             assert self.player.timeout == True
             #Ensure that the players dice inputs have enforced to be 0 for every die roll
-            #Note: a input of 0 for the dice is not allowed for ordinary players, this only happens if a timeout appears
+            #Note: an input of 0 for the dice is not allowed for ordinary players, this only happens if a timeout appears
             for die in [self.player.dice1, self.player.dice2, self.player.dice3, self.player.dice4, self.player.dice5, self.player.dice6]:
                 assert die == 0
             assert self.player.payoff == 0
             #Check that the correct html is displayed
-            assert 'You did not enter anything on the last page' in self.html
+            assert 'You could not finish entering your results on the last page.' in self.html
             assert 'The overall sum of your dice is' not in self.html
 
 

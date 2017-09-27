@@ -19,8 +19,8 @@ class Constants(BaseConstants):
     name_in_url = 'dice'
     players_per_group = None
     num_rounds = 1
-    #Please enter the number of minutes you want to allow for rolling the dice
-    timeoutminutes = 5
+    #Please enter the number of minutes you want to allow for rolling the die
+    timeoutminutes = 0.1
     timeoutseconds = 60*timeoutminutes
 
 
@@ -45,25 +45,24 @@ class Subsession(BaseSubsession):
             self.assign_treatment_random()
 
     #Returns a list with the relative frequency values of the histogramm
-    #Only players who did not time out are regarded s.t. the histogramm is correct
+    #Only players who did not time out are regarded s.t. the histogramm is correct and no deception occurs
     def create_histogramm_data(self):
         data = {6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0, 13: 0, 14: 0, 15: 0, 16: 0,
                 17: 0, 18: 0, 19: 0, 20: 0, 21: 0, 22: 0, 23: 0, 24: 0, 25: 0, 26: 0,
                 27: 0, 28: 0, 29: 0, 30: 0, 31: 0, 32: 0, 33: 0, 34: 0, 35: 0, 36: 0}
-
         num_no_timout = 0
         for player in self.get_players():
-            #only regard players with no timeout
+            #Only regard players with no timeout
             if player.timeout == False:
                 sum = player.return_sum()
                 data[sum] += 1
-                #count players with no timeout
+                #Count players with no timeout
                 num_no_timout += 1
         if num_no_timout != 0:
-            # Divide absolute frequency of players with no timeout by number of players with no timeout to get relative frequency
+            #Divide absolute frequency of players with no timeout by number of players with no timeout to get relative frequency
             return [value / num_no_timout for value in list(data.values())]
-        else: #all players had a timout. Display list with 0`s to not force an exception
-            return[value for value in list(data.values())]
+        else: #All players had a timeout. Display list with 0`s to not force an exception
+            return [value for value in list(data.values())]
 
 
 class Group(BaseGroup):
@@ -86,7 +85,7 @@ class Player(BasePlayer):
     dice4 = models.IntegerField(
         doc='The input for the fourth dice roll of the player', min=1, max=6)
     dice5 = models.IntegerField(
-        doc='The input for the fift dice roll of the player', min=1, max=6)
+        doc='The input for the fifth dice roll of the player', min=1, max=6)
     dice6 = models.IntegerField(
         doc='The input for the sixt dice roll of the player', min=1, max=6)
 

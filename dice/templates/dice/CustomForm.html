@@ -14,8 +14,9 @@
        You have {{Constants.timeoutminutes}} {% if Constants.timeoutminutes == 1 %}minute{%else%}minutes{%endif%}.
        If you are not finished within {{Constants.timeoutminutes}} {% if Constants.timeoutminutes == 1 %}minute{%else%}minutes{%endif%} you will not get any payoff.
         </p>
-
     </div>
+
+
     <br>
     Enter your results in these boxes:<br>
     <div>
@@ -26,9 +27,11 @@
         <input style="height: 100px; width: 100px; font-size: 90pt;" name="dice5" type="text" pattern="[1-6]">&nbsp;&nbsp;&nbsp;&nbsp;
         <input style="height: 100px; width: 100px; font-size: 90pt;" name="dice6" type="text" pattern="[1-6]">
     </div>
-
-    <br><br><br>
+    <br>
+    <br>
+    Please press the next button after you entered your results.
     {% next_button %}
+
 {% endblock %}
 
 

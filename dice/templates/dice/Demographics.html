@@ -27,6 +27,8 @@
         <p>
             {% formfield player.studies %}
             {% formfield player.nonstudent %}
+
+
         </p>
     </div>
     <div class="instructions well well-lg">
@@ -43,11 +45,12 @@
         <td style="padding:0 15px 0 15px;"><input type="radio" name="risk" id="risk_6" value="Mostly Disagree"><br /><label for="risk_6" style="font-size: 13px"> Mostly <br> Disagree </label></td>
         <td style="padding:0 15px 0 15px;"><input type="radio" name="risk" id="risk_7" value="Entirely Disagree"><br /><label for="risk_7" style="font-size: 13px"> Entirely <br> Disagree </label></td>
     </tr>
- </table>
-    {{form.risk.errors}}
+         </table>
+
+    <br>
     </div>
     <br>
-    Please press next after answering all questions.
+    Please press the next button after answering all questions.
     {% next_button %}
 {% endblock %}
 
