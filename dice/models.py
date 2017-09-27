@@ -20,7 +20,7 @@ class Constants(BaseConstants):
     players_per_group = None
     num_rounds = 1
     #Please enter the number of minutes you want to allow for rolling the die
-    timeoutminutes = 0.1
+    timeoutminutes = 1
     timeoutseconds = 60*timeoutminutes
 
 

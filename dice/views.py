@@ -3,22 +3,17 @@ from . import models
 from ._builtin import Page, WaitPage
 from .models import Constants
 
-#TODO: delete {{sum}} in template results
-
 
 class Instructions(Page):
     pass
 
-#TODO: nooo thats not right?!
-#TODO well I looked in the database and it has overwritten all dice if not all but some were entered
-#TODO but why did he then enter a nonzero sum ????????
+
 #Timelimit appears in both treatments s.t. decisions are not biased through different experiment conditions
 #If a player has a timeout the otree default submits 0`s for all the dice.
 #Note: If a player submits e. g. only 3 dice and then has a timout, the player will get no payoff and will not be regarded in the histogramm.
-#The dice inputs will be unchanged though and the other noninputted dice will be filled with 0. This player can be sorted out in the analysis by the timeout bool.
-#Yet, in the database we have all information possible.
+#The dice inputs will be unchanged though and the other noninputted dice will be filled with 0 (This cannot be changed with a forced submission).
+#This player can be sorted out in the analysis by the timeout bool. Additionally, in the database we have all information possible.
 class CustomForm(Page):
-
     form_model = models.Player
     form_fields = ['dice1', 'dice2', 'dice3', 'dice4', 'dice5', 'dice6']
     timeout_seconds = Constants.timeoutseconds
@@ -55,9 +50,9 @@ class Demographics(Page):
     form_fields = ['nonstudent', 'gender', 'age', 'risk', 'country','studies']
     def error_message(self, values):
         if values['studies'] == '' and values['nonstudent'] == False:
-            return ('Please click the box below if you are not a student. If you are a student please enter your field of studies.')
+            return ('Please click the nonstudent box if you are not a student. If you are a student please enter your field of studies.')
         if values['studies'] != '' and values['nonstudent'] == True:
-            return('You entered a field of study and that you are not a student. Please leave the studies field blank if you are not a student.')
+            return('You entered a field of study and you clicked the nonstudent-box also. Please leave the studies field blank if you are not a student.')
 
 
 class LastPage(Page):
