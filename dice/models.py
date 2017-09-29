@@ -20,7 +20,7 @@ class Constants(BaseConstants):
     players_per_group = None
     num_rounds = 1
     #Please enter the number of minutes you want to allow for rolling the die
-    timeoutminutes = 0.1
+    timeoutminutes = 5
     timeoutseconds = 60*timeoutminutes
 
 
@@ -78,17 +78,17 @@ class Player(BasePlayer):
     #All dice inputs shall appear in the database
     #Note: html restrictions in the template provide the input restrictions, yet for the sake of safety they are also implemented here
     dice1 = models.IntegerField(
-        doc='The input for the 1st dice roll of the player', min=1, max=6)
+        doc='The input for the first dice roll of the player', min=1, max=6)
     dice2 = models.IntegerField(
-        doc='The input for the 2nd dice roll of the player', min=1, max=6)
+        doc='The input for the second dice roll of the player', min=1, max=6)
     dice3 = models.IntegerField(
-        doc='The input for the 3rd dice roll of the player', min=1, max=6)
+        doc='The input for the third dice roll of the player', min=1, max=6)
     dice4 = models.IntegerField(
         doc='The input for the fourth dice roll of the player', min=1, max=6)
     dice5 = models.IntegerField(
         doc='The input for the fifth dice roll of the player', min=1, max=6)
     dice6 = models.IntegerField(
-        doc='The input for the sixt dice roll of the player', min=1, max=6)
+        doc='The input for the sixth dice roll of the player', min=1, max=6)
 
     age = models.IntegerField(
         doc='The age of the participant',
