@@ -20,7 +20,7 @@ class Constants(BaseConstants):
     players_per_group = None
     num_rounds = 1
     #Please enter the number of minutes you want to allow for rolling the die
-    timeoutminutes = 1
+    timeoutminutes = 0.1
     timeoutseconds = 60*timeoutminutes
 
 
@@ -76,6 +76,7 @@ class Player(BasePlayer):
         choices=['private', 'distribution'])
 
     #All dice inputs shall appear in the database
+    #Note: html restrictions in the template provide the input restrictions, yet for the sake of safety they are also implemented here
     dice1 = models.IntegerField(
         doc='The input for the 1st dice roll of the player', min=1, max=6)
     dice2 = models.IntegerField(
@@ -111,25 +112,20 @@ class Player(BasePlayer):
         blank='True',
         verbose_name='Enter your field of study if you are a student. Leave blank if you are not a student')
 
-
-    risk = models.CharField()
-
-
-    # risk = models.CharField(
-    #     doc='Risk attitude of the participant. (7 points Likert scale)',
-    #     choices=['Entirely Agree',
-    #              'Mostly Agree',
-    #              'Somewhat Agree',
-    #              'Neither Agree nor Disagree',
-    #              'Somewhat Disagree',
-    #              'Mostly Disagree',
-    #              'Entirely Disagree'],
-    #     widget=widgets.RadioSelectHorizontal(),
-    #     verbose_name='How strong do you agree/disagree with the following statement: "I like taking risks."?')
+    #Note: html restrictions in the template provide the input restrictions, yet for the sake of safety they are also implemented here
+    risk = models.CharField(
+        doc='Risk attitude of the participant. (7 points Likert Scale)',
+        choices=['Entirely Agree',
+                 'Mostly Agree',
+                 'Somewhat Agree',
+                 'Neither Agree nor Disagree',
+                 'Somewhat Disagree',
+                 'Mostly Disagree',
+                 'Entirely Disagree'],)
 
     timeout = models.BooleanField(
         default=False,
-        doc="Equals True if the participant did not enter any results. She then gets a payoff of zero.")
+        doc="Equals True if the participant did not enter results. She then gets a payoff of zero.")
 
     #Note: if you implement a 'doc' parameter this will throw an exception
     country = CountryField(

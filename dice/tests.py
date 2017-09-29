@@ -92,7 +92,8 @@ class PlayerBot(Bot):
                 yield SubmissionMustFail(views.Demographics, {'nonstudent': True, 'gender': 'Female', 'age': 26, 'risk': 'Entirely Disagree', 'country': 'DE', 'studies': 'Economics'})
                 #Ensure that if one does not click nonstudent (so he is a student) that he must enter something in field of studies
                 yield SubmissionMustFail(views.Demographics,{'nonstudent': False, 'gender': 'Female', 'age': 26, 'risk': 'Entirely Disagree', 'country': 'DE', 'studies': ''})
-
+                #Ensure robustness of Likert Scale
+                yield SubmissionMustFail(views.Demographics, {'nonstudent': False, 'gender': 'Female', 'age': 26, 'risk': 'Blubb', 'country': 'DE', 'studies': 'Economics'})
                 #Finish the experiment correctly
                 yield (views.Demographics, {'nonstudent': False, 'gender': 'Female', 'age': 26, 'risk': 'Entirely Disagree', 'country': 'DE', 'studies': 'Economics'})
 

@@ -7,18 +7,16 @@
 
 {% block content %}
 
-
     <div class="instructions well well-lg">
         <p>
-        Please roll your die now 6 times and enter the results in the below boxes and press the next button after you finished.
-       You have {{Constants.timeoutminutes}} {% if Constants.timeoutminutes == 1 %}minute{%else%}minutes{%endif%}.
-       If you are not finished within {{Constants.timeoutminutes}} {% if Constants.timeoutminutes == 1 %}minute{%else%}minutes{%endif%} you will not get any payoff.
+            Please roll your die now 6 times and enter the results in the below boxes and press the next button after you finished.
+            You have {{Constants.timeoutminutes}} {% if Constants.timeoutminutes == 1 %}minute{%else%}minutes{%endif%}.
+            If you are not finished within {{Constants.timeoutminutes}} {% if Constants.timeoutminutes == 1 %}minute{%else%}minutes{%endif%} you will not get any payoff.
         </p>
     </div>
-
-
     <br>
-    Enter your results in these boxes:<br>
+    Enter your results in these boxes:
+    <br>
     <div>
         <input style="height: 100px; width: 100px; font-size: 90pt;" name="dice1" type="text" pattern="[1-6]" required="True">&nbsp;&nbsp;&nbsp;&nbsp;
         <input style="height: 100px; width: 100px; font-size: 90pt;" name="dice2" type="text" pattern="[1-6]" required="True">&nbsp;&nbsp;&nbsp;&nbsp;
@@ -31,7 +29,6 @@
     <br>
     Please press the next button after you entered your results.
     {% next_button %}
-
 {% endblock %}
 
 
