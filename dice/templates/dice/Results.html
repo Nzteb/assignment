@@ -7,29 +7,23 @@
 
 {% block content %}
     <div class="instructions well well-lg">
-
         {% if player.timeout == True%}
-        You could not finish entering your results on the last page. <br>
-        As explained in the instructions, you will get payed: <b>{{player.payoff}}</b><br>
+            You could not finish entering your results on the last page. <br>
+            As explained in the instructions, you will get payed: <b>{{player.payoff}}</b><br>
         {% else %}
-        The overall sum of your dice is: <b>{{sum}}</b> <br>
-        Therefore, you will get payed: <b>{{player.payoff}}</b><br>
+            The overall sum of your dice is: <b>{{sum}}</b> <br>
+            Therefore, you will get payed: <b>{{player.payoff}}</b><br>
         {% endif %}
-
         {% if player.treatment == 'distribution' %}
-        Below, you can see the distribution of the results of the other participants.
-        <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div><br>
-        (Note: Participants who could not finish within {{Constants.timeoutminutes}} {% if Constants.timeoutminutes == 1 %}minute{%else%}minutes{%endif%}
-        are not regarded in the graph.)
+            Below, you can see the distribution of the results of the other participants.
+            <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div><br>
+            (Note: Participants who could not finish within {{Constants.timeoutminutes}} {% if Constants.timeoutminutes == 1 %}minute{%else%}minutes{%endif%}
+            are not regarded in the graph.)
         {% endif %}
-
     </div>
     <br>
     Please press the next button to reach the demographic questionnaire.
     {% next_button %}
-
-
-
 {% endblock %}
 
 {% block scripts %}

@@ -1,16 +1,12 @@
 {% extends "global/Page.html" %}
 {% load otree_tags staticfiles %}
 
-
 {% block title %}
     Introduction to the Experiment
 {% endblock %}
 
-
 {% block content %}
-
     <div class="instructions well well-lg">
-
         {% if player.treatment == 'private' %}
             <h3 class="panel-sub-heading">
                 Instructions <small>(private treatment)</small>

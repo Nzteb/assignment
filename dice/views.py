@@ -52,7 +52,7 @@ class Demographics(Page):
         if values['studies'] == '' and values['nonstudent'] == False:
             return ('Please click the nonstudent box if you are not a student. If you are a student please enter your field of studies.')
         if values['studies'] != '' and values['nonstudent'] == True:
-            return('You entered a field of study and you clicked the nonstudent-box also. Please leave the studies field blank if you are not a student.')
+            return('You entered a field of study and you clicked the nonstudent box also. Please leave the studies field blank if you are not a student.')
 
 
 class LastPage(Page):
